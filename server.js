@@ -17,19 +17,7 @@ let pairingCode = null;
 let userPhoneNumber = null;
 
 app.get('/', (req, res) => {
-    res.send(`
-        <h1>WhatsApp Web Auth</h1>
-        <p>Scan the QR code or enter the pairing code to authenticate.</p>
-        <img id="qrcode" src="/qrcode" alt="QR Code"/><br>
-        <p>Pairing Code: <strong>${pairingCode}</strong></p>
-        <form action="/pair" method="POST">
-            <label for="pairingCode">Enter Pairing Code:</label>
-            <input type="text" id="pairingCode" name="pairingCode" required><br>
-            <label for="userPhoneNumber">Enter Your Phone Number (in international format, e.g., +1234567890):</label>
-            <input type="text" id="userPhoneNumber" name="userPhoneNumber" required>
-            <button type="submit">Pair</button>
-        </form>
-    `);
+    res.sendFile(__dirname + '/public/index.html');
 });
 
 app.get('/qrcode', async (req, res) => {
@@ -46,7 +34,7 @@ app.get('/qrcode', async (req, res) => {
                 return;
             }
             pairingCode = uuidv4();
-            res.send(`<img src="${url}" alt="QR Code"/>`);
+            res.send(`<h1>Scan QR Code</h1><img src="${url}" alt="QR Code"/>`);
         });
     });
 
